@@ -3,7 +3,7 @@ import { Plus, Trash2, CheckSquare, Square } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
-import { useData } from '../../contexts/DataContext';
+import { useHybridData as useData } from '../../contexts/HybridDataContext';
 import { cn } from '../../utils/cn';
 
 export const SubtaskList = ({ jobId }) => {

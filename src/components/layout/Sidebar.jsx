@@ -1,15 +1,21 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Briefcase, ListTodo, Settings } from 'lucide-react';
+import { LayoutDashboard, Briefcase, ListTodo, User as UserIcon } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
+import { useHybridData } from '../../contexts/HybridDataContext';
 import { cn } from '../../utils/cn';
 
 const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/gigs', icon: Briefcase, label: 'Gigs' },
   { to: '/jobs', icon: ListTodo, label: 'Jobs' },
+  { to: '/profile', icon: UserIcon, label: 'Profile' },
 ];
 
 export const Sidebar = () => {
+  const { user, isConfigured } = useAuth();
+  const { mode } = useHybridData();
+
   return (
     <aside className="w-64 bg-cyber-bg-secondary border-r border-cyber-border flex flex-col">
       <nav className="flex-1 p-4 space-y-2">
@@ -40,7 +46,19 @@ export const Sidebar = () => {
         })}
       </nav>
 
-      <div className="p-4 border-t border-cyber-border">
+      <div className="p-4 border-t border-cyber-border space-y-2">
+        {isConfigured && user && (
+          <div className="px-4 py-2 text-xs font-mono text-cyber-gray-400 truncate">
+            <div className="text-cyber-yellow truncate">{user.email}</div>
+            <div className="text-cyber-gray-600">Cloud Mode</div>
+          </div>
+        )}
+        {mode === 'localStorage' && (
+          <div className="px-4 py-2 text-xs font-mono text-cyber-gray-400">
+            <div className="text-cyber-yellow">Local Mode</div>
+            <div className="text-cyber-gray-600">Offline Storage</div>
+          </div>
+        )}
         <div className="px-4 py-2 text-xs font-mono text-cyber-gray-500 uppercase">
           System Status: <span className="text-green-400">Online</span>
         </div>

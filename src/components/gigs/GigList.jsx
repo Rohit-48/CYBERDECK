@@ -4,7 +4,7 @@ import { GigCard } from './GigCard';
 import { GigForm } from './GigForm';
 import { Button } from '../ui/Button';
 import { Select } from '../ui/Select';
-import { useData } from '../../contexts/DataContext';
+import { useHybridData as useData } from '../../contexts/HybridDataContext';
 
 export const GigList = () => {
   const { gigs, createGig } = useData();

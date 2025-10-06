@@ -1,6 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { DataProvider } from './contexts/DataContext';
+import { AuthProvider } from './contexts/AuthContext';
+import { HybridDataProvider } from './contexts/HybridDataContext';
+import { ProtectedRoute } from './components/auth/ProtectedRoute';
+import { Login } from './components/auth/Login';
+import { Register } from './components/auth/Register';
+import { UserProfile } from './components/auth/UserProfile';
 import { MainLayout } from './components/layout/MainLayout';
 import { Dashboard } from './components/dashboard/Dashboard';
 import { GigList } from './components/gigs/GigList';
@@ -10,20 +15,35 @@ import { JobDetail } from './components/jobs/JobDetail';
 
 function App() {
   return (
-    <DataProvider>
-      <Router>
-        <Routes>
-          <Route path="/" element={<MainLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="gigs" element={<GigList />} />
-            <Route path="gigs/:gigId" element={<GigDetail />} />
-            <Route path="jobs" element={<JobList />} />
-            <Route path="jobs/:jobId" element={<JobDetail />} />
-            <Route path="*" element={<div className="text-center py-16 font-mono text-cyber-gray-500">404 - Page Not Found</div>} />
-          </Route>
-        </Routes>
-      </Router>
-    </DataProvider>
+    <AuthProvider>
+      <HybridDataProvider>
+        <Router>
+          <Routes>
+            {/* Public routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            
+            {/* Protected routes */}
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <MainLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Dashboard />} />
+              <Route path="gigs" element={<GigList />} />
+              <Route path="gigs/:gigId" element={<GigDetail />} />
+              <Route path="jobs" element={<JobList />} />
+              <Route path="jobs/:jobId" element={<JobDetail />} />
+              <Route path="profile" element={<UserProfile />} />
+              <Route path="*" element={<div className="text-center py-16 font-mono text-cyber-gray-500">404 - Page Not Found</div>} />
+            </Route>
+          </Routes>
+        </Router>
+      </HybridDataProvider>
+    </AuthProvider>
   );
 }
 

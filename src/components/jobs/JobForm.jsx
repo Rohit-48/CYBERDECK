@@ -4,7 +4,7 @@ import { Input } from '../ui/Input';
 import { Textarea } from '../ui/Textarea';
 import { Select } from '../ui/Select';
 import { Button } from '../ui/Button';
-import { useData } from '../../contexts/DataContext';
+import { useHybridData as useData } from '../../contexts/HybridDataContext';
 
 export const JobForm = ({ open, onClose, onSubmit, initialData = null, preselectedGigId = null }) => {
   const { gigs } = useData();

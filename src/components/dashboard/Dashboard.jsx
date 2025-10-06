@@ -4,7 +4,7 @@ import { Briefcase, ListTodo, TrendingUp, Clock, Calendar, AlertCircle } from 'l
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
-import { useData } from '../../contexts/DataContext';
+import { useHybridData as useData } from '../../contexts/HybridDataContext';
 import { calculateProgress, formatDate, formatDuration, isOverdue, isDueSoon } from '../../utils/helpers';
 import { cn } from '../../utils/cn';
 

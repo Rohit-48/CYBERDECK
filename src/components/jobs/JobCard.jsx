@@ -4,7 +4,7 @@ import { Calendar, Clock, Paperclip, CheckSquare } from 'lucide-react';
 import { Card, CardContent } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { formatDate, formatDuration, getPriorityColor, getStatusColor, isOverdue, isDueSoon } from '../../utils/helpers';
-import { useData } from '../../contexts/DataContext';
+import { useHybridData as useData } from '../../contexts/HybridDataContext';
 import { cn } from '../../utils/cn';
 
 export const JobCard = ({ job }) => {

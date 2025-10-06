@@ -3,7 +3,7 @@ import { Plus, Trash2, Paperclip, Link as LinkIcon } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
-import { useData } from '../../contexts/DataContext';
+import { useHybridData as useData } from '../../contexts/HybridDataContext';
 
 export const AttachmentList = ({ jobId }) => {
   const { getJobById, addAttachment, deleteAttachment } = useData();

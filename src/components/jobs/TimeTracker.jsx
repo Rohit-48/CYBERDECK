@@ -3,7 +3,7 @@ import { Play, Pause, RotateCcw, Clock } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
-import { useData } from '../../contexts/DataContext';
+import { useHybridData as useData } from '../../contexts/HybridDataContext';
 import { useTimer } from '../../hooks/useTimer';
 import { formatDuration } from '../../utils/helpers';
 

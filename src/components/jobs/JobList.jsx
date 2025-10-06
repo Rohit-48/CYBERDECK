@@ -5,7 +5,7 @@ import { JobCard } from './JobCard';
 import { JobForm } from './JobForm';
 import { Button } from '../ui/Button';
 import { Select } from '../ui/Select';
-import { useData } from '../../contexts/DataContext';
+import { useHybridData as useData } from '../../contexts/HybridDataContext';
 
 export const JobList = () => {
   const navigate = useNavigate();
