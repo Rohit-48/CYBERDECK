@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Download, Upload, Trash2, Database, HardDrive, User } from 'lucide-react';
+import { Download, Upload, Trash2, Database, HardDrive, User, HelpCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
+import { WelcomeModal } from '../common/WelcomeModal';
 import { useHybridData } from '../../contexts/HybridDataContext';
 import { useAuth } from '../../contexts/AuthContext';
 import { exportData, importData } from '../../utils/exportImport';
@@ -12,6 +13,7 @@ export const Settings = () => {
   const { gigs, jobs, mode } = useHybridData();
   const { user, isConfigured } = useAuth();
   const [importing, setImporting] = useState(false);
+  const [showWelcome, setShowWelcome] = useState(false);
 
   const handleExport = () => {
     try {
@@ -174,33 +176,37 @@ export const Settings = () => {
           </CardContent>
         </Card>
 
-        {/* Keyboard Shortcuts */}
+        {/* Help & Guides */}
         <Card>
           <CardHeader>
-            <CardTitle>Keyboard Shortcuts</CardTitle>
+            <CardTitle>
+              <HelpCircle className="inline mr-2" size={18} />
+              Help & Guides
+            </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-2 text-sm font-mono">
-              <div className="flex justify-between">
-                <span className="text-cyber-gray-400">New Gig</span>
-                <kbd className="px-2 py-1 bg-cyber-bg-tertiary border border-cyber-border">G</kbd>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-cyber-gray-400">New Job</span>
-                <kbd className="px-2 py-1 bg-cyber-bg-tertiary border border-cyber-border">J</kbd>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-cyber-gray-400">Dashboard</span>
-                <kbd className="px-2 py-1 bg-cyber-bg-tertiary border border-cyber-border">D</kbd>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-cyber-gray-400">Search</span>
-                <kbd className="px-2 py-1 bg-cyber-bg-tertiary border border-cyber-border">/</kbd>
-              </div>
+          <CardContent className="space-y-3">
+            <p className="text-sm text-cyber-gray-400 font-mono">
+              Need help getting started or learning features?
+            </p>
+            <Button 
+              variant="primary" 
+              className="w-full"
+              onClick={() => setShowWelcome(true)}
+            >
+              <HelpCircle size={16} className="mr-2" />
+              Open Quick Start Guide
+            </Button>
+            <div className="text-xs text-cyber-gray-500 font-mono space-y-1">
+              <div>📖 Check <code>USER_GUIDE.md</code> for full documentation</div>
+              <div>⌨️ Press D/G/J/A/S for quick navigation</div>
+              <div>🔍 Press / to search anything</div>
             </div>
           </CardContent>
         </Card>
       </div>
+
+      {/* Welcome Modal */}
+      <WelcomeModal open={showWelcome} onClose={() => setShowWelcome(false)} />
     </div>
   );
 };

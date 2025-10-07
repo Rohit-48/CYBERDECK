@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Briefcase, ListTodo, TrendingUp, Clock, Calendar, AlertCircle } from 'lucide-react';
+import { Briefcase, ListTodo, TrendingUp, Clock, Calendar, AlertCircle, HelpCircle } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
+import { WelcomeModal } from '../common/WelcomeModal';
 import { useHybridData as useData } from '../../contexts/HybridDataContext';
 import { calculateProgress, formatDate, formatDuration, isOverdue, isDueSoon } from '../../utils/helpers';
 import { cn } from '../../utils/cn';
@@ -11,6 +12,20 @@ import { cn } from '../../utils/cn';
 export const Dashboard = () => {
   const navigate = useNavigate();
   const { gigs, jobs, getJobsByGigId } = useData();
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  // Show welcome modal for new users
+  useEffect(() => {
+    const hasSeenWelcome = localStorage.getItem('cyberdeck-seen-welcome');
+    if (!hasSeenWelcome && gigs.length === 0 && jobs.length === 0) {
+      setShowWelcome(true);
+    }
+  }, [gigs.length, jobs.length]);
+
+  const handleCloseWelcome = () => {
+    localStorage.setItem('cyberdeck-seen-welcome', 'true');
+    setShowWelcome(false);
+  };
 
   // Calculate stats
   const activeGigs = gigs.filter(g => g.status === 'active');
@@ -43,14 +58,27 @@ export const Dashboard = () => {
 
   return (
     <div>
-      <div className="mb-6">
-        <h1 className="text-3xl font-display font-bold uppercase tracking-wider text-cyber-yellow mb-2">
-          Dashboard
-        </h1>
-        <p className="text-sm font-mono text-cyber-gray-500">
-          Overview of your gigs and jobs
-        </p>
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-display font-bold uppercase tracking-wider text-cyber-yellow mb-2">
+            Dashboard
+          </h1>
+          <p className="text-sm font-mono text-cyber-gray-500">
+            Overview of your gigs and jobs
+          </p>
+        </div>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setShowWelcome(true)}
+          title="Show welcome guide"
+        >
+          <HelpCircle size={18} />
+        </Button>
       </div>
+
+      {/* Welcome Modal */}
+      <WelcomeModal open={showWelcome} onClose={handleCloseWelcome} />
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
