@@ -86,10 +86,6 @@ export const UserProfile = () => {
                   <span className="text-sm text-cyber-gray-500 font-mono">Email:</span>
                   <div className="text-cyber-gray-200 font-mono">{user.email}</div>
                 </div>
-                <div>
-                  <span className="text-sm text-cyber-gray-500 font-mono">User ID:</span>
-                  <div className="text-cyber-gray-200 font-mono text-xs break-all">{user.id}</div>
-                </div>
               </>
             ) : (
               <div>
