@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
+import { getRandomAvatar } from '../../utils/avatars';
 
 export const Register = () => {
   const navigate = useNavigate();
@@ -36,8 +37,12 @@ export const Register = () => {
       return;
     }
 
+    // Assign random avatar on registration
+    const randomAvatar = getRandomAvatar();
+
     const { error } = await signUp(formData.email, formData.password, {
       full_name: formData.fullName,
+      avatar: randomAvatar.id,
     });
 
     if (error) {

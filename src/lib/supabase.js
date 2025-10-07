@@ -1,3 +1,4 @@
+// Connection to Supabase
 import { createClient } from '@supabase/supabase-js';
 
 // Environment variables - you'll need to add your Supabase credentials

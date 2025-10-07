@@ -1,20 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { useAuth } from '../../contexts/AuthContext';
 import { useHybridData } from '../../contexts/HybridDataContext';
-import { LogOut, User, Database, HardDrive } from 'lucide-react';
+import { LogOut, User, Database, HardDrive, Edit } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Badge } from '../ui/Badge';
+import { Avatar } from '../ui/Avatar';
+import { AvatarPicker } from './AvatarPicker';
+import { getUserAvatar } from '../../utils/avatars';
 
 export const UserProfile = () => {
   const navigate = useNavigate();
-  const { user, signOut, isConfigured } = useAuth();
+  const { user, signOut, isConfigured, updateProfile } = useAuth();
   const { mode, gigs, jobs } = useHybridData();
+  const [isAvatarPickerOpen, setIsAvatarPickerOpen] = useState(false);
+
+  const currentAvatar = getUserAvatar(user);
 
   const handleSignOut = async () => {
     await signOut();
     navigate('/login');
+  };
+
+  const handleAvatarChange = async (avatarId) => {
+    const { error } = await updateProfile({ avatar: avatarId });
+    if (error) {
+      toast.error('Failed to update avatar');
+    } else {
+      toast.success('Avatar updated successfully!');
+    }
   };
 
   return (
@@ -29,7 +45,7 @@ export const UserProfile = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* User Info */}
+        {/* User Info & Avatar */}
         <Card>
           <CardHeader>
             <CardTitle>
@@ -37,9 +53,35 @@ export const UserProfile = () => {
               Account Information
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-4">
             {isConfigured && user ? (
               <>
+                {/* Avatar Section */}
+                <div className="flex items-center gap-4 pb-4 border-b border-cyber-border">
+                  <Avatar 
+                    emoji={currentAvatar.emoji}
+                    color={currentAvatar.color}
+                    size="xl"
+                  />
+                  <div className="flex-1">
+                    <div className="text-sm text-cyber-gray-500 font-mono mb-2">Your Avatar</div>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => setIsAvatarPickerOpen(true)}
+                    >
+                      <Edit size={14} className="mr-2" />
+                      Change Avatar
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <span className="text-sm text-cyber-gray-500 font-mono">Full Name:</span>
+                  <div className="text-cyber-gray-200 font-mono">
+                    {user.user_metadata?.full_name || 'Not set'}
+                  </div>
+                </div>
                 <div>
                   <span className="text-sm text-cyber-gray-500 font-mono">Email:</span>
                   <div className="text-cyber-gray-200 font-mono">{user.email}</div>
@@ -47,12 +89,6 @@ export const UserProfile = () => {
                 <div>
                   <span className="text-sm text-cyber-gray-500 font-mono">User ID:</span>
                   <div className="text-cyber-gray-200 font-mono text-xs break-all">{user.id}</div>
-                </div>
-                <div>
-                  <span className="text-sm text-cyber-gray-500 font-mono">Full Name:</span>
-                  <div className="text-cyber-gray-200 font-mono">
-                    {user.user_metadata?.full_name || 'Not set'}
-                  </div>
                 </div>
               </>
             ) : (
@@ -156,6 +192,14 @@ export const UserProfile = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Avatar Picker Dialog */}
+      <AvatarPicker
+        open={isAvatarPickerOpen}
+        onClose={() => setIsAvatarPickerOpen(false)}
+        currentAvatarId={user?.user_metadata?.avatar || currentAvatar.id}
+        onSelect={handleAvatarChange}
+      />
     </div>
   );
 };
