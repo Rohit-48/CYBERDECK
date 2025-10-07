@@ -12,12 +12,16 @@ import { GigList } from './components/gigs/GigList';
 import { GigDetail } from './components/gigs/GigDetail';
 import { JobList } from './components/jobs/JobList';
 import { JobDetail } from './components/jobs/JobDetail';
+import { AnalyticsDashboard } from './components/analytics/AnalyticsDashboard';
+import { Settings } from './components/settings/Settings';
+import { ToastProvider } from './components/ui/Toast';
 
 function App() {
   return (
     <AuthProvider>
       <HybridDataProvider>
         <Router>
+          <ToastProvider />
           <Routes>
             {/* Public routes */}
             <Route path="/login" element={<Login />} />
@@ -37,6 +41,8 @@ function App() {
               <Route path="gigs/:gigId" element={<GigDetail />} />
               <Route path="jobs" element={<JobList />} />
               <Route path="jobs/:jobId" element={<JobDetail />} />
+              <Route path="analytics" element={<AnalyticsDashboard />} />
+              <Route path="settings" element={<Settings />} />
               <Route path="profile" element={<UserProfile />} />
               <Route path="*" element={<div className="text-center py-16 font-mono text-cyber-gray-500">404 - Page Not Found</div>} />
             </Route>

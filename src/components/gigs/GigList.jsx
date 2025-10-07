@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Plus, Filter } from 'lucide-react';
+import { Plus, Filter, Briefcase } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { GigCard } from './GigCard';
 import { GigForm } from './GigForm';
 import { Button } from '../ui/Button';
 import { Select } from '../ui/Select';
+import { EmptyState } from '../common/EmptyState';
 import { useHybridData as useData } from '../../contexts/HybridDataContext';
 
 export const GigList = () => {
@@ -12,8 +14,13 @@ export const GigList = () => {
   const [filterStatus, setFilterStatus] = useState('all');
   const [sortBy, setSortBy] = useState('recent');
 
-  const handleCreateGig = (gigData) => {
-    createGig(gigData);
+  const handleCreateGig = async (gigData) => {
+    const result = await createGig(gigData);
+    if (result) {
+      toast.success('Gig created successfully!');
+    } else {
+      toast.error('Failed to create gig');
+    }
   };
 
   // Filter gigs
@@ -88,14 +95,21 @@ export const GigList = () => {
 
       {/* Gigs Grid */}
       {filteredGigs.length === 0 ? (
-        <div className="text-center py-16">
-          <p className="text-cyber-gray-500 font-mono">
-            {filterStatus === 'all' 
-              ? 'No gigs found. Create your first gig to get started.'
-              : `No ${filterStatus} gigs found.`
-            }
-          </p>
-        </div>
+        gigs.length === 0 ? (
+          <EmptyState
+            icon={Briefcase}
+            title="No Gigs Yet"
+            description="Create your first gig to start organizing your projects and tasks"
+            action={() => setIsFormOpen(true)}
+            actionLabel="Create First Gig"
+          />
+        ) : (
+          <div className="text-center py-16">
+            <p className="text-cyber-gray-500 font-mono">
+              No {filterStatus} gigs found.
+            </p>
+          </div>
+        )
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredGigs.map(gig => (

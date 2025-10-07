@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Plus, Filter } from 'lucide-react';
+import { Plus, Filter, ListTodo } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { JobCard } from './JobCard';
 import { JobForm } from './JobForm';
 import { Button } from '../ui/Button';
 import { Select } from '../ui/Select';
+import { EmptyState } from '../common/EmptyState';
 import { useHybridData as useData } from '../../contexts/HybridDataContext';
 
 export const JobList = () => {
@@ -32,8 +34,18 @@ export const JobList = () => {
     }
   }, [location.search]);
 
-  const handleCreateJob = (jobData) => {
-    createJob(jobData);
+  const handleCreateJob = async (jobData) => {
+    if (gigs.length === 0) {
+      toast.error('Create a gig first before adding jobs');
+      navigate('/gigs');
+      return;
+    }
+    const result = await createJob(jobData);
+    if (result) {
+      toast.success('Job created successfully!');
+    } else {
+      toast.error('Failed to create job');
+    }
   };
 
   // Filter jobs
@@ -181,16 +193,32 @@ export const JobList = () => {
 
       {/* Jobs Grid */}
       {filteredJobs.length === 0 ? (
-        <div className="text-center py-16">
-          <p className="text-cyber-gray-500 font-mono">
-            {searchQuery 
-              ? `No jobs found matching "${searchQuery}"`
-              : jobs.length === 0
-                ? 'No jobs found. Create your first job to get started.'
+        jobs.length === 0 && gigs.length === 0 ? (
+          <EmptyState
+            icon={ListTodo}
+            title="No Jobs Yet"
+            description="Create a gig first, then add jobs to organize your tasks"
+            action={() => navigate('/gigs')}
+            actionLabel="Create First Gig"
+          />
+        ) : jobs.length === 0 ? (
+          <EmptyState
+            icon={ListTodo}
+            title="No Jobs Yet"
+            description="Add jobs to your gigs to start tracking your tasks"
+            action={() => setIsFormOpen(true)}
+            actionLabel="Create First Job"
+          />
+        ) : (
+          <div className="text-center py-16">
+            <p className="text-cyber-gray-500 font-mono">
+              {searchQuery 
+                ? `No jobs found matching "${searchQuery}"`
                 : 'No jobs match the current filters.'
-            }
-          </p>
-        </div>
+              }
+            </p>
+          </div>
+        )
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredJobs.map(job => (

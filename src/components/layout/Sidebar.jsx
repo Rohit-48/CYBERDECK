@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Briefcase, ListTodo, User as UserIcon } from 'lucide-react';
+import { LayoutDashboard, Briefcase, ListTodo, BarChart3, Settings as SettingsIcon } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { useHybridData } from '../../contexts/HybridDataContext';
 import { cn } from '../../utils/cn';
@@ -9,7 +9,8 @@ const navItems = [
   { to: '/', icon: LayoutDashboard, label: 'Dashboard' },
   { to: '/gigs', icon: Briefcase, label: 'Gigs' },
   { to: '/jobs', icon: ListTodo, label: 'Jobs' },
-  { to: '/profile', icon: UserIcon, label: 'Profile' },
+  { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+  { to: '/settings', icon: SettingsIcon, label: 'Settings' },
 ];
 
 export const Sidebar = () => {
