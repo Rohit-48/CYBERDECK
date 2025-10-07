@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magic Link - Cyberdeck</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: 'Share Tech Mono', monospace;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #0a0a0a; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <!-- Main Container -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width: 600px; background-color: #1a1a1a; border: 2px solid #3a3a3a;">
+          
+          <!-- Header -->
+          <tr>
+            <td style="padding: 40px 40px 20px 40px; text-align: center; border-bottom: 1px solid #3a3a3a;">
+              <div style="font-size: 48px; margin-bottom: 10px;">⚡</div>
+              <h1 style="margin: 0; padding: 0; font-family: 'Rajdhani', sans-serif; font-size: 36px; font-weight: 700; color: #fcee0a; text-transform: uppercase; letter-spacing: 3px;">
+                CYBERDECK
+              </h1>
+              <p style="margin: 8px 0 0 0; font-size: 12px; color: #737373; text-transform: uppercase; letter-spacing: 2px;">
+                Instant Access Link
+              </p>
+            </td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding: 40px;">
+              <h2 style="margin: 0 0 20px 0; font-family: 'Rajdhani', sans-serif; font-size: 24px; color: #fcee0a; text-transform: uppercase; letter-spacing: 2px;">
+                Access Your Account
+              </h2>
+              
+              <p style="margin: 0 0 20px 0; color: #e5e5e5; font-size: 14px; line-height: 1.6;">
+                Click the button below to instantly access your Cyberdeck account. No password needed!
+              </p>
+
+              <!-- Action Button -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 30px 0;">
+                <tr>
+                  <td align="center">
+                    <a href="{{ .ConfirmationURL }}" 
+                       style="display: inline-block; 
+                              padding: 16px 40px; 
+                              background-color: #fcee0a; 
+                              color: #0a0a0a; 
+                              text-decoration: none; 
+                              font-family: 'Share Tech Mono', monospace;
+                              font-size: 14px; 
+                              font-weight: 700;
+                              text-transform: uppercase; 
+                              letter-spacing: 2px;
+                              border: none;
+                              clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);">
+                      ACCESS CYBERDECK
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin: 30px 0 10px 0; color: #737373; font-size: 12px; line-height: 1.6;">
+                Or copy and paste this link into your browser:
+              </p>
+              <p style="margin: 0; padding: 12px; background-color: #0a0a0a; border: 1px solid #3a3a3a; color: #fcee0a; font-size: 11px; word-break: break-all;">
+                {{ .ConfirmationURL }}
+              </p>
+
+              <!-- Info Box -->
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-top: 30px; background-color: #2a2a2a; border-left: 3px solid #fcee0a;">
+                <tr>
+                  <td style="padding: 15px;">
+                    <p style="margin: 0; color: #a3a3a3; font-size: 12px; line-height: 1.5;">
+                      <strong style="color: #fcee0a;">🔐 SECURITY:</strong> This link expires in 1 hour and can only be used once. Don't share this link with anyone.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding: 20px 40px; background-color: #0a0a0a; border-top: 1px solid #3a3a3a; text-align: center;">
+              <p style="margin: 0 0 10px 0; color: #525252; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">
+                Cyberdeck Project Management System
+              </p>
+              <p style="margin: 0; color: #404040; font-size: 10px;">
+                Sent to {{ .Email }}
+              </p>
+              <p style="margin: 10px 0 0 0; color: #fcee0a; font-size: 12px; font-style: italic;">
+                Stay frosty, choom! ⚡
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+
