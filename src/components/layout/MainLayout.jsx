@@ -2,25 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
-import { CinematicTutorial } from '../tutorial/CinematicTutorial';
 import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts';
 
 export const MainLayout = () => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const [showTutorial, setShowTutorial] = useState(false);
-
-  useEffect(() => {
-    // Check if this is first visit
-    const hasSeenTutorial = localStorage.getItem('cyberdeck-tutorial-completed');
-    if (!hasSeenTutorial) {
-      // Small delay before starting tutorial
-      const timer = setTimeout(() => {
-        setShowTutorial(true);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, []);
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -51,11 +37,6 @@ export const MainLayout = () => {
           </div>
         </main>
       </div>
-
-      {/* Cinematic Tutorial */}
-      {showTutorial && (
-        <CinematicTutorial onComplete={() => setShowTutorial(false)} />
-      )}
     </div>
   );
 };

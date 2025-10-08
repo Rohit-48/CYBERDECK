@@ -189,16 +189,6 @@ export const Settings = () => {
               Need help getting started or learning features?
             </p>
             <Button 
-              variant="primary" 
-              className="w-full"
-              onClick={() => {
-                localStorage.removeItem('cyberdeck-tutorial-completed');
-                window.location.href = '/';
-              }}
-            >
-              🎮 Restart Cinematic Tutorial
-            </Button>
-            <Button 
               variant="ghost" 
               className="w-full"
               onClick={() => setShowWelcome(true)}
@@ -207,7 +197,6 @@ export const Settings = () => {
               Open Quick Start Guide
             </Button>
             <div className="text-xs text-cyber-gray-500 font-mono space-y-1">
-              <div>🎬 Immersive game-style tutorial</div>
               <div>⌨️ Press D/G/J/A/S for quick navigation</div>
               <div>🔍 Press / to search anything</div>
             </div>
